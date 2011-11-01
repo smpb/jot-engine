@@ -14,9 +14,12 @@ my $build = Module::Build->new(
   license       => 'perl',
   requires      => {
     'perl'                  => '5.10.1',
+    'autodie'               => 2,
     'namespace::autoclean'  => 0,
     'Moose'                 => 2,
     'Mojolicious'           => 2,
+    'Config::Tiny'          => 2,
+    'Text::Markdown'        => 1,
   },
   build_requires      => { 'Test::More'     => 0 },
   configure_requires  => { 'Module::Build'  => 0 },
