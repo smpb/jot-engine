@@ -19,6 +19,7 @@ my $build = Module::Build->new(
     'Moose'                 => 2,
     'Mojolicious'           => 2,
     'Text::Markdown'        => 1,
+    'DateTime'              => 0,
   },
   build_requires      => { 'Test::More'     => 0 },
   configure_requires  => { 'Module::Build'  => 0 },
