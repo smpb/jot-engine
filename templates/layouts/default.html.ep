@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="css/jot.css" />
+  </head>
+  <body>
+    <div id='wrap'>
+      <div id='header'>
+        <h1><%= title %></h1>
+      </div>
+      <div id='menu'>
+        <ul>
+          <li id="selected"><a href="#">Index</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </div>
+      <div id='main'>
+        <%= content %>
+      </div>
+      <div id='sidebar'>
+        <%= $description %>
+      </div>
+      <div id='footer'>
+        <p>Powered by <a href='https://github.com/smpb/jot-engine'>Jot::Engine</a></p>
+      </div>
+    </div>
+  </body>
+</html>

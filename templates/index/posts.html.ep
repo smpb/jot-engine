@@ -1,0 +1,9 @@
+% layout 'default';
+% title $name;
+% for my $post (@$posts) {
+<div class='post'>
+  <div class='date'>Posted on <%= $post->{'creation_date'} %></div>
+  <%== $post->{'content'} %>
+  <hr />
+</div>
+% }
