@@ -33,7 +33,7 @@ has 'posts' => (
   isa     => 'ArrayRef[Jot::Model::Post]',
   handles => {
     get_posts => 'elements',
-    add_post  => 'push',
+    _push_post  => 'push',
   },
   default => sub { [] },
 );
@@ -49,6 +49,25 @@ has 'users' => (
 
   default => sub { [] },
 );
+
+# add posts using insertion sort
+sub add_post
+{
+  my ($self, $new_post) = @_;
+
+  my $posts = $self->posts;
+  for (my $i = 0; $i<@$posts;$i++)
+  {
+    if ($new_post->creation_date->epoch > $posts->[$i]->creation_date->epoch)
+    {
+      splice @$posts, $i, 0, $new_post;
+      return 1;
+    }
+  }
+
+  $self->_push_post($new_post);
+  return 1;
+}
 
 override 'new' => sub {
   my $self = super(shift);

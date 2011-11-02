@@ -7,6 +7,7 @@ use warnings;
 
 use namespace::autoclean;
 use Text::Markdown;
+use File::stat;
 use DateTime;
 use Moose;
 
@@ -45,9 +46,12 @@ override 'new' => sub {
 
   if (-e $args{'file'})
   {
+    my $stat = stat($args{'file'});
     open my $fh, '<', $args{'file'};
     my $md = do { local $/; <$fh>  };
     close $fh;
+
+    $self->creation_date(DateTime->from_epoch(epoch => $stat->ctime));
 
     $self->content($self->_parse($md));
   }
