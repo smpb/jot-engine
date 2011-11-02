@@ -6,7 +6,6 @@ use autodie;
 use warnings;
 
 use namespace::autoclean;
-use Config::Tiny;
 use Moose;
 
 use Jot::Model::Post;
@@ -55,9 +54,7 @@ override 'new' => sub {
   my $self = super(shift);
   my %args = @_;
 
-  die "Invalid configuration file." unless (-e $args{'config'});
-
-  my $config = Config::Tiny->new->read($args{'config'});
+  my $config = $args{'config'} || {};
 
   foreach my $section (keys %$config)
   {

@@ -18,7 +18,6 @@ my $build = Module::Build->new(
     'namespace::autoclean'  => 0,
     'Moose'                 => 2,
     'Mojolicious'           => 2,
-    'Config::Tiny'          => 2,
     'Text::Markdown'        => 1,
   },
   build_requires      => { 'Test::More'     => 0 },
