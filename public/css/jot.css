@@ -1,0 +1,151 @@
+/* Jot::Engine default CSS */
+
+body, html {
+  margin: 5px;
+  padding: 0;
+  color: #CCCCCC;
+  background: #222222;
+  font-family: Helvetica, Verdana, sans-serif;
+}
+
+a {
+  color: white;
+  font-weight: bold;
+  text-decoration:none;
+}
+
+a:hover {
+  text-decoration:underline;
+}
+
+#wrap {
+  width: 900px;
+  margin: 0 auto;
+}
+
+#header {
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  background: black;
+  -webkit-border-radius: 5px; /* Safari prototype */
+  -moz-border-radius:    5px; /* Gecko browsers */
+  border-radius:         5px; /* Everything else - limited support at the moment */
+}
+
+#header #logo {
+  margin: auto;
+  float: right;
+  font-size: 2.2em;  
+}
+
+#header h1 {
+  margin: 0;
+}
+
+#menu {
+  font-size:   .8em;
+  font-weight: bold;
+  background:  #444400;
+  width:       680px;
+}
+
+#menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#menu li {
+  float: left;
+  background: #333333;
+  border: 1px solid #222222;
+  border-bottom-width: 0;
+  margin: 0;
+}
+
+#menu #selected {
+  border-color: black;
+}
+
+#menu a {
+  text-decoration: none;
+  display: block;
+  padding: 0.24em 1em;
+  color: #222222;
+  width: 8em;
+  text-align: center;
+}
+
+#menu #selected a {
+  position: relative;
+  top: 1px;
+  background: #444444;
+  color: white;
+  font-weight: bold;
+}
+
+#menu a:hover {
+  text-decoration:underline;
+}
+
+#main {
+  float:          left;
+  width:          648px;
+  border:         1px solid black;
+  padding:        10px;
+  min-height:     50%;
+  background:     #444444;
+  margin-bottom:  10px;
+}
+
+.post .date {
+  float:        right;
+  color:        black;
+  font-size:    0.7em;
+  font-style:   italic;
+}
+
+.post .tags {
+  margin-top:   20px;
+  color:        black;
+  font-size:    0.7em;
+  font-weight:  bold;
+}
+
+
+.post hr {
+  margin: 20px auto;
+  width:  80%;
+}
+
+#sidebar {
+  float:         right;
+  width:         200px;
+  border:        1px dashed black;
+  padding:       10px;
+  min-height:    50%;
+  text-align:    justify;
+  margin-bottom: 10px;
+  background:    #444444;
+}
+
+#sidebar img {
+  margin:  20px auto;
+  display: block;
+}
+
+#footer {
+  clear: both;
+  padding: 5px;
+  background: black;
+  -webkit-border-radius: 5px; /* Safari prototype */
+  -moz-border-radius:    5px; /* Gecko browsers */
+  border-radius:         5px; /* Everything else - limited support at the moment */
+}
+
+#footer p {
+  margin: 0;
+  text-align: right;
+  font-weight: bold;
+  font-size: 0.65em;
+}
