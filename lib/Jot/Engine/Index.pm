@@ -18,9 +18,11 @@ sub posts
   foreach my $p (@{$self->blog->posts})
   {
     push(@{$posts}, {
-      creation_date => $p->creation_date->dmy . ', ' . $p->creation_date->hms,
-      content       => $p->content, 
-      });
+      created   => $p->created->dmy  . ', ' . $p->created->hms,
+      modified  => $p->modified->dmy . ', ' . $p->modified->hms,
+      content   => $p->content,
+      tags      => $p->tags,
+    });
   }
 
   # Render template "index/main.html.ep" with message

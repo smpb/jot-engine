@@ -20,6 +20,7 @@ my $build = Module::Build->new(
     'Mojolicious'           => 2,
     'Text::Markdown'        => 1,
     'DateTime'              => 0,
+    'Time::ParseDate'       => 2011,
   },
   build_requires      => { 'Test::More'     => 0 },
   configure_requires  => { 'Module::Build'  => 0 },

@@ -58,7 +58,7 @@ sub add_post
   my $posts = $self->posts;
   for (my $i = 0; $i<@$posts;$i++)
   {
-    if ($new_post->creation_date->epoch > $posts->[$i]->creation_date->epoch)
+    if ($new_post->created->epoch > $posts->[$i]->created->epoch)
     {
       splice @$posts, $i, 0, $new_post;
       return 1;

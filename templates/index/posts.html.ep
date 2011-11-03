@@ -2,8 +2,18 @@
 % title $name;
 % for my $post (@$posts) {
 <div class='post'>
-  <div class='date'>Posted on <%= $post->{'creation_date'} %></div>
+  <div class='date'>
+    Posted on <%= $post->{'created'} %>
+    % if ($post->{'created'} ne $post->{'modified'}) {
+      (last modified on <%= $post->{'modified'} %>)
+    % }
+  </div>
   <%== $post->{'content'} %>
+  % if (@{$post->{'tags'}} > 0) {
+  <div class='tags'>
+    Tags: <%= join ', ', @{$post->{'tags'}} %>
+  </div>
+  % }
   <hr />
 </div>
 % }
