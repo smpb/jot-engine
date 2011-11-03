@@ -77,7 +77,12 @@ override 'new' => sub {
     {
       given ($_)
       {
-        when (/^;tags:(.+)/) { $self->tags( [ split(',', $1) ] ); }
+        when (/^;tags:(.+)/)
+        {
+          my $tags = $1;
+          $tags =~ s/,\s*,/,/g;  # make sure "empty" tags aren't considered
+          $self->tags( [ split(/\s*,\s*/, $tags) ] );
+        }
         when (/^;title:(.+)/)
         {
           $self->title($1);

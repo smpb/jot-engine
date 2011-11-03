@@ -11,7 +11,7 @@
   <%== $post->{'content'} %>
   % if (@{$post->{'tags'}} > 0) {
   <div class='tags'>
-    Tags: <%= join ', ', @{$post->{'tags'}} %>
+    Tags: <%== join ' | ', map { "<a href='/tag/$_'>$_</a>" } @{$post->{'tags'}} %>
   </div>
   % }
   <hr />
