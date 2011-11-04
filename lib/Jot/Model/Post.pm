@@ -39,7 +39,12 @@ has 'permatitle' => (
 
 has 'tags' => (
   is      => 'rw',
+  traits  => ['Array'],
   isa     => 'ArrayRef[Str]',
+  handles => {
+    get_tags => 'elements',
+    add_tag  => 'push',
+  },
   default => sub { [] },
 );
 
@@ -61,7 +66,7 @@ sub generate_permatitle
   $pt =~ s/[\W]+/-/ig;
   $pt =~ s/-+$//ig;
 
-  $self->_permatitle($pt);
+  $self->_permatitle(lc $pt);
 }
 
 override 'new' => sub {

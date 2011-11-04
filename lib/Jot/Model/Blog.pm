@@ -38,6 +38,20 @@ has 'posts' => (
   default => sub { [] },
 );
 
+has '_posts_by_date' => (
+  is      => 'rw',
+  traits  => ['Hash'],
+  isa     => 'HashRef[Int]',
+  default => sub { {} },
+);
+
+has '_posts_by_tag' => (
+  is      => 'rw',
+  traits  => ['Hash'],
+  isa     => 'HashRef[Str]',
+  default => sub { {} },
+);
+
 has 'users' => (
   is      => 'rw',
   traits  => ['Array'],
@@ -55,6 +69,31 @@ sub add_post
 {
   my ($self, $new_post) = @_;
 
+  my $year  = $new_post->created->year;
+  my $month = $new_post->created->month;
+  my $day   = $new_post->created->day;
+
+  if (defined $self->_posts_by_date->{$year}->{$month}->{$day})
+  {
+    push(@{$self->_posts_by_date->{$year}->{$month}->{$day}}, $new_post);
+  }
+  else
+  {
+    $self->_posts_by_date->{$year}->{$month}->{$day} = [ $new_post ];
+  }
+
+  foreach my $tag ($new_post->get_tags)
+  {
+    if (defined $self->_posts_by_tag->{$tag})
+    {
+      push(@{$self->_posts_by_tag->{$tag}}, $new_post);
+    }
+    else
+    {
+      $self->_posts_by_tag->{$tag} = [ $new_post ];
+    }
+  }
+
   my $posts = $self->posts;
   for (my $i = 0; $i<@$posts;$i++)
   {
@@ -67,6 +106,59 @@ sub add_post
 
   $self->_push_post($new_post);
   return 1;
+}
+
+sub get_posts_by_date
+{
+  my $self = shift;
+  return [] if (@_ % 2);
+
+  my $posts = [];
+  my %args  = @_;
+  my $y = $args{'year'}  || $args{'YEAR'};
+  my $m = $args{'month'} || $args{'MONTH'};
+  my $d = $args{'day'}   || $args{'DAY'};
+
+  if ((defined $y) and (defined $m) and (defined $d))
+  {
+    $posts = $self->_posts_by_date->{$y}->{$m}->{$d};
+  }
+  elsif ((defined $y) and (defined $m))
+  {
+    my @days = keys %{$self->_posts_by_date->{$y}->{$m}};
+
+    foreach my $d (sort @days)
+    {
+      map { push(@$posts, $_) }
+        @{$self->get_posts_by_date(year => $y, month => $m, day => $d)};
+    }
+  }
+  elsif (defined $y)
+  {
+    my @months = keys %{$self->_posts_by_date->{$y}};
+
+    foreach my $m (sort @months)
+    {
+      map { push(@$posts, $_) }
+        @{$self->get_posts_by_date(year => $y, month => $m)};
+    }
+  }
+
+  return $posts;
+}
+
+sub get_posts_by_tag
+{
+  my $self = shift;
+  return [] if (@_ % 2);
+
+  my %args  = @_;
+  my $t = $args{'tag'}  || $args{'TAG'};
+
+  my $posts = $self->_posts_by_tag->{$t};
+
+  return $posts if (defined $posts);
+  return [];
 }
 
 override 'new' => sub {
@@ -93,7 +185,7 @@ override 'new' => sub {
             my $path = $config->{$section}->{'path'};
             opendir(my $dir, $path)
               or die "Unable to access '$path'.";
-            my @files = grep { /\.md$/ && -f "$path/$_" } readdir($dir)
+            my @files = grep { /\.md$/i && -f "$path/$_" } readdir($dir)
               or die "Unable to list contents of '$path'.";
             foreach my $f (@files)
             {
