@@ -25,6 +25,7 @@ sub startup
 
   # Normal route to controller
   $r->route('/')->to(controller => 'index', action=> 'posts');
+  $r->route('/tag/:tag')->to(controller => 'index', action=> 'posts_search');
 }
 
 1;

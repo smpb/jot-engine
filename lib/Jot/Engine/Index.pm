@@ -25,10 +25,43 @@ sub posts
     });
   }
 
-  # Render template "index/main.html.ep" with message
-  $self->render(name => $self->blog->name,
+  # Render template "index/posts.html.ep"
+  $self->render(name        => $self->blog->name,
                 description => $self->blog->description,
-                posts => $posts );
+                posts       => $posts );
+}
+
+sub posts_search
+{
+  my $self   = shift;
+  my $posts  = {};
+  my $search = [];
+
+  $search = $self->blog->get_posts_by_tag(tag => $self->param('tag'));
+
+  foreach my $post (@$search)
+  {
+    my $date = $post->created->dmy;
+    my $p = {
+      permalink => $post->permalink,
+      title     => $post->title,
+    };
+
+    if (defined $posts->{$date})
+    {
+      push(@{$posts->{$date}}, $p);
+    }
+    else
+    {
+      $posts->{$date} = [ $p ];
+    }
+  }
+
+  # Render template "index/posts_search.html.ep"
+  $self->render(template => 'index/posts_search',
+                name        => $self->blog->name,
+                description => $self->blog->description,
+                posts       => $posts);
 }
 
 1;

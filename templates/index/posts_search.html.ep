@@ -1,0 +1,12 @@
+% layout 'default';
+% title $name;
+<div class='search'>
+% for my $date (sort keys %$posts) {
+  <p><%= $date %></p>
+  <ul>
+%   for my $post (@{$posts->{$date}}) {
+    <li><a href="<%= $post->{'permalink'} %>"><%= $post->{'title'} %></a></li>
+%   }
+  </ul>
+% }
+</div>

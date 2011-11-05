@@ -58,16 +58,25 @@ has '_parser' => (
   default   => sub { Text::Markdown->new; },
 );
 
-sub generate_permatitle
+sub permalink
 {
   my $self = shift;
-  my $pt = $self->title;
 
-  $pt =~ s/[\W]+/-/ig;
-  $pt =~ s/-+$//ig;
-
-  $self->_permatitle(lc $pt);
+  return lc '/'. $self->created->year .'/'. $self->created->month .'/'.
+          $self->created->day .'/'. $self->permatitle;
 }
+
+before 'title' => sub {
+  my $self = shift;
+
+  if (@_) # update permatitle if we're updating the title
+  {
+    my ($t) = @_;
+    $t =~ s/[\W]+/-/ig;
+    $t =~ s/-+$//ig;
+    $self->_permatitle($t);
+  }
+};
 
 override 'new' => sub {
   my $self = super(shift);
@@ -91,7 +100,6 @@ override 'new' => sub {
         when (/^;title:(.+)/)
         {
           $self->title($1);
-          $self->generate_permatitle;
         }
         when (/^;(created|modified):(.+)/)
         {
