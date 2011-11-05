@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" type="text/css" href="css/jot.css" />
+    <link rel="stylesheet" type="text/css" href="/css/jot.css" />
   </head>
   <body>
     <div id='wrap'>
@@ -12,15 +12,15 @@
       </div>
       <div id='menu'>
         <ul>
-          <li id="selected"><a href="#">Index</a></li>
-          <li><a href="#">About</a></li>
+          <li id="selected"><a href="/">Index</a></li>
+          <li><a href="/about">About</a></li>
         </ul>
       </div>
       <div id='main'>
         <%= content %>
       </div>
       <div id='sidebar'>
-        <img src='images/logo.png' />
+        <img src='/images/logo.png' />
         <%= $description %>
       </div>
       <div id='footer'>
